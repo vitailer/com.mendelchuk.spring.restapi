@@ -14,10 +14,7 @@ import java.util.List;
 public class EmployeeDAOImplementation implements EmployeeDAO{
 
     @Autowired
-    private SessionFactory sessionFactory = new Configuration()
-            .configure("hibernate.xml")
-            .addAnnotatedClass(Employee.class)
-            .buildSessionFactory();
+    private SessionFactory sessionFactory ;
     // для того , чтобы  DAO мог подключаться к БД по средствам Hibernate
     // DAO должен иметь доступ к sessionFactory
 

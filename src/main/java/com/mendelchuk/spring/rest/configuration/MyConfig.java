@@ -41,6 +41,11 @@ public class MyConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
         hibernateProperties.setProperty("hibernate.show_sql","true");
+        hibernateProperties.setProperty("hibernate.c3p0.min_size","5");
+        hibernateProperties.setProperty("hibernate.c3p0.max_size","20");
+        hibernateProperties.setProperty("hibernate.c3p0.timeout","300");
+        hibernateProperties.setProperty("hibernate.c3p0.max_statements","50");
+        hibernateProperties.setProperty("hibernate.c3p0.idle_test_period","3000");
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }

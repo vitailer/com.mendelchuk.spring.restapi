@@ -1,13 +1,12 @@
 package com.mendelchuk.spring.rest.controller;
 
 import com.mendelchuk.spring.rest.entity.Employee;
+import com.mendelchuk.spring.rest.exception_handing.NoSuchEmployeeException;
 import com.mendelchuk.spring.rest.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -16,8 +15,39 @@ public class MyRestController {
     private EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public List<Employee> showAllEmployees(){
+    public List<Employee> showAllEmployees() {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         return allEmployees;
+    }
+
+    @GetMapping("/employees/{id}")
+    public Employee getEmployee(@PathVariable int id) {
+        Employee employee = employeeService.getEmployee(id);
+        if (employee == null) {
+            throw new NoSuchEmployeeException("Нет такого работника с ID " + id + " в базе данных");
+        }
+        return employee;
+    }
+
+    @PostMapping("/employees")
+    public Employee addNewEmployee(@RequestBody Employee employee) {
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee) {
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable int id) {
+        Employee employee = employeeService.getEmployee(id);
+        if (employee == null) {
+            throw new NoSuchEmployeeException("Нет такого работника с ID " + id + " в базе данных");
+        }
+        employeeService.deleteEmployee(id);
+        return "Работник с Id: " + id + " был удалён";
     }
 }
