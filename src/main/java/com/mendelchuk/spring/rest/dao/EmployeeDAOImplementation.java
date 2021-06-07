@@ -13,8 +13,15 @@ import java.util.List;
 @Repository
 public class EmployeeDAOImplementation implements EmployeeDAO{
 
-    @Autowired
     private SessionFactory sessionFactory ;
+    @Autowired
+    public EmployeeDAOImplementation(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
     // для того , чтобы  DAO мог подключаться к БД по средствам Hibernate
     // DAO должен иметь доступ к sessionFactory
 
